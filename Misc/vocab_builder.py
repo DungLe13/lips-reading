@@ -35,7 +35,7 @@ def get_vocab():
         'at': 14, 'green': 15, 'j': 16, 'n': 17, 'set': 18, ..., 'q': 51}
     """
     dictionary = {}
-    count = 1
+    count = 0
     for word in vocabulary:
         dictionary[word] = count
         count += 1

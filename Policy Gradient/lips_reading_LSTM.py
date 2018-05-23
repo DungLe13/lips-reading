@@ -14,11 +14,11 @@ import numpy as np
 
 import json
 import sys
-sys.path.append('/Users/danielle13/Desktop/Natural Language Processing/lip-reading/Misc')
+sys.path.append('/Users/danielle13/Desktop/Natural Language Processing/lips-reading/Misc')
 import lip_reading_env
 from lip_reading_env import GRIDLipReading
 
-with open('/Users/danielle13/Desktop/Natural Language Processing/lip-reading/Misc/video_ids.txt', 'r') as f:
+with open('/Users/danielle13/Desktop/Natural Language Processing/lips-reading/Misc/video_ids.txt', 'r') as f:
     file_names = json.load(f)
 
 env_name = 'GRIDLipReading'
@@ -61,11 +61,12 @@ MAX_STEPS = 6
 episode_history = deque(maxlen=100)
 
 for e in range(MAX_EPISODES):
+    total_rewards = 0
 
     for file in file_names[:5]:
         # initialize
+        print(file)
         state = env.reset(file)
-        total_rewards = 0
 
         for t in range(MAX_STEPS):
             action, next_state = pg_reinforce.sampleAction(state[np.newaxis, :])
@@ -81,10 +82,10 @@ for e in range(MAX_EPISODES):
             if done:
                 break
 
-        pg_reinforce.updateModel()
-        episode_history.append(total_rewards)
-        mean_rewards = np.mean(episode_history)
+    pg_reinforce.updateModel()
+    episode_history.append(total_rewards)
+    mean_rewards = np.mean(episode_history)
 
-        print("Episode {}:".format(e))
-        print("- Reward for this episode: {}".format(total_rewards))
-        print("- Average reward for last 100 episodes: {:.2f}".format(mean_rewards))
+    print("Episode {}:".format(e))
+    print("- Reward for this episode: {}".format(total_rewards))
+    print("- Average reward for last 100 episodes: {:.2f}".format(mean_rewards))

@@ -40,7 +40,7 @@ class GRIDLipReading(gym.Env):
         self.action_space = spaces.Discrete(52)      # len(vocabulary) = 52
         self.observation_space = spaces.Box(low=l, high=h)
         # labeled text for each video
-        with open('/Users/danielle13/Desktop/Natural Language Processing/lip-reading/Misc/alignment.txt', 'r') as f:
+        with open('/Users/danielle13/Desktop/Natural Language Processing/lips-reading/Misc/alignment.txt', 'r') as f:
             self.alignment = json.load(f)
 
         self.inp = None
@@ -77,6 +77,6 @@ class GRIDLipReading(gym.Env):
 
     def reset(self, file):
         self.guess_count = 0
-        self.inp = np.load("/Users/danielle13/Desktop/Natural Language Processing/lip-reading/GRID corpus/vectors/{0}.npz".format(file))
+        self.inp = np.load("/Users/danielle13/Desktop/Natural Language Processing/lips-reading/GRID corpus/vectors/{0}.npz".format(file))
         self.observation = np.zeros((6,), dtype=int)
         return self.inp['X']

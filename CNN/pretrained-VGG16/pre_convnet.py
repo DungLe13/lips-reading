@@ -244,15 +244,15 @@ def sorted_aphanumeric(data):
 ''' Run the session '''
 sess = tf.Session()
 imgs = tf.placeholder(tf.float32, [None, 224, 224, 3])
-weight_path = '/Users/danielle13/Desktop/Natural Language Processing/lip-reading/CNN/pretrained-VGG16/vgg16_weights.npz'
+weight_path = '/Users/danielle13/Desktop/Natural Language Processing/lips-reading/CNN/pretrained-VGG16/vgg16_weights.npz'
 model = convnet(imgs, weight_path, sess)
 
-path = '/Users/danielle13/Desktop/Natural Language Processing/lip-reading/GRID corpus/lips'
-seq_rep = []
+path = '/Users/danielle13/Desktop/Natural Language Processing/lips-reading/GRID corpus/lips'
 
 for file in os.listdir(path):
     if file != ".DS_Store" and file != ".DS_St":
         img_path = path + '/' + file
+        seq_rep = []
     
         for img_file in sorted_aphanumeric(os.listdir(img_path)):
             if img_file != ".DS_Store":
@@ -266,4 +266,3 @@ for file in os.listdir(path):
         X = np.array(seq_rep)
         # save numpy array to .npz file
         np.savez_compressed('../../GRID corpus/vectors/{0}'.format(file), X=X)
-    
