@@ -31,3 +31,9 @@ The three RL methods implemented on this project are:
 | Deep Q-Network | Mnih et al., 2014 | to be added |
 | Asynchronous Advantage Actor Critic (A3C) | Mnih et al., 2016 | to be added |
 
+### Important Notes
+
+1. The GRID corpus contains 33,000 facial recordings. In the folder `GRID corpus/vectors`, only 100 vector representations of 100 videos are shown to demonstrate the method. The GRID corpus can be found [HERE](http://spandh.dcs.shef.ac.uk/gridcorpus/).
+2. Another dataset that I plan to use in this project is the BBC-Oxford 'Multi-View Lip Reading Sentences' (MV-LRS) Dataset, which can be found [HERE](http://www.robots.ox.ac.uk/~vgg/data/lip_reading_sentences/).
+3. In folder `Video Processing`, the file `shape_predictor_68_face_landmarks.dat`, which was used to detect lips region, is left out due to its large size. This file can be downloaded [HERE](https://drive.google.com/file/d/1-8zm3bu9Y5kvjAS6C7tUlpYeJOVmxPZe/view?usp=sharing).
+4. In folder `CNN/pretrained-VGG16`, the file `vgg16_weights.npz` is also left out due to its large size. This file contains the weights pre-trained using ImageNet dataset. This file can be downloaded [HERE](http://www.cs.toronto.edu/~frossard/post/vgg16/).
