@@ -27,7 +27,7 @@ The three RL methods implemented on this project are:
 
 | Method | References | Implementation |
 |---|---|---|
-| REINFORCE | Williams, 1992; Zaremba & Sutskever, 2015 | [REINFORCE](https://github.com/DungLe13/lips-reading/blob/master/Policy%20Gradient/lips_reading_LSTM.py) |
+| REINFORCE | Williams, 1992; Zaremba & Sutskever, 2015 | [REINFORCE](https://github.com/DungLe13/lips-reading/blob/master/Policy%20Gradient/REINFORCE.py) |
 | Deep Q-Network | Mnih et al., 2014 | to be added |
 | Asynchronous Advantage Actor Critic (A3C) | Mnih et al., 2016 | to be added |
 
