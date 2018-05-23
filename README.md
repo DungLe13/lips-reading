@@ -19,7 +19,7 @@ Three dominant components of the model are:
 	- An **action** refers to  predicting the next word in the sequence at each time step.
 	- A **reward function**: BLEU - evaluating the similarity between the generated text and the ground truth.
 
-![Visualization of Lip Reading Model]()
+![Visualization of Lip Reading Model](https://github.com/DungLe13/lips-reading/blob/master/model.png)
 
 ### Reinforcement Learning Methods
 
