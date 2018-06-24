@@ -75,10 +75,7 @@ class REINFORCE(object):
 
             # predict actions from policy network
             self.action_scores = tf.identity(self.policy_outputs, name="action_scores")
-            #print(self.action_scores)
             self.predicted_actions = tf.multinomial(self.action_scores, 1)
-            #self.predicted_actions = tf.argmax(self.action_scores, axis=1)
-            #print(self.predicted_actions)
 
         # loss regularization
         policy_network_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="policy_network")
@@ -97,11 +94,9 @@ class REINFORCE(object):
             self.pg_loss = tf.reduce_mean(self.cross_entropy_loss)
             self.reg_loss = tf.reduce_sum([tf.reduce_sum(tf.square(x)) for x in policy_network_variables])
             self.loss = self.pg_loss + self.reg_param * self.reg_loss
-            #print(self.loss)
 
             # compute gradients
             self.gradients = self.optimizer.compute_gradients(self.loss)
-            #print(self.gradients)
 
             # compute policy gradients
             for i, (grad, var) in enumerate(self.gradients):
@@ -127,14 +122,6 @@ class REINFORCE(object):
         self.no_op = tf.no_op()
 
     def sampleAction(self, states_):
-        """
-        print(self.predicted_actions)
-        print(self.states)
-        action_ = self.session.run(self.predicted_actions, {self.states: states_})[0]
-        out_state = self.session.run(self.output_state, {self.states: states_})
-        return action_[0], out_state
-        """
-        
         def softmax(y):
             ''' helper function to normalize log probabilities'''
             max_y = np.amax(y)
@@ -169,8 +156,11 @@ class REINFORCE(object):
         # reduce gradient variance by normalization
         self.all_rewards += discounted_rewards.tolist()
         self.all_rewards = self.all_rewards[:self.max_reward_length]
-        discounted_rewards -= np.mean(self.all_rewards)
-        discounted_rewards /= np.std(self.all_rewards)
+        if np.any(self.all_rewards):
+            discounted_rewards -= np.mean(self.all_rewards)
+            discounted_rewards /= np.std(self.all_rewards)
+        else:
+            discounted_rewards = self.all_rewards
 
         # calculate summaries
         calculate_summaries = self.summary_writer is not None and self.train_iteration % self.summary_every == 0

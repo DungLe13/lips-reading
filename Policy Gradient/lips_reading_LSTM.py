@@ -8,10 +8,10 @@
 from collections import deque
 
 from REINFORCE import REINFORCE
-#from lstm_stacked import LSTM, X
 import tensorflow as tf
 import numpy as np
 
+import time
 import json
 import sys
 sys.path.append('/Users/danielle13/Desktop/Natural Language Processing/lips-reading/Misc')
@@ -56,16 +56,18 @@ def policy_net(states):
 pg_reinforce = REINFORCE(sess, optimizer, policy_net, state_dim, num_actions,
                          summary_writer=writer)
 
-MAX_EPISODES = 3
+MAX_EPISODES = 5
 MAX_STEPS = 6
 episode_history = deque(maxlen=100)
 
 for e in range(MAX_EPISODES):
     total_rewards = 0
 
-    for file in file_names[:5]:
+    for file in file_names[:1]:
         # initialize
         print(file)
+        video_rewards = 0
+        start_time = time.time()
         state = env.reset(file)
 
         for t in range(MAX_STEPS):
@@ -73,8 +75,8 @@ for e in range(MAX_EPISODES):
             print(action)
             reward, done, _ = env.step(action, file)
 
+            video_rewards += reward
             total_rewards += reward
-            #reward = -1 if done else 0        # normalize reward
             pg_reinforce.storeRollout(state, action, reward)
             state = np.array(next_state)
             state = tf.Session().run(tf.unstack(state, 1, 1))[0]
@@ -82,7 +84,11 @@ for e in range(MAX_EPISODES):
             if done:
                 break
 
+        print("--- %s seconds ---" % round(time.time() - start_time, 2))
+
+    st = time.time()
     pg_reinforce.updateModel()
+    print("--- Update model takes %s seconds ---" % round(time.time() - st, 2))
     episode_history.append(total_rewards)
     mean_rewards = np.mean(episode_history)
 

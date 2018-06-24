@@ -61,13 +61,19 @@ class GRIDLipReading(gym.Env):
         self.observation[self.guess_count] = action
         # compute the BLEU score (reward) between observation and alignment
         # at the end of sentence
-        if self.guess_count == 5:
-            smoother = SmoothingFunction()
-            reward = sentence_bleu([self.alignment[file]], self.observation,
-                                   weights=(0.25, 0.25, 0.25, 0.25),
-                                   smoothing_function=smoother.method1)
+        if self.alignment[file][self.guess_count] == action:
+            reward = 0.1
+            print("Word-level reward is " + str(reward))
         else:
             reward = 0
+            print("Word-level reward is " + str(reward))
+                
+        if self.guess_count == 5:
+            smoother = SmoothingFunction()
+            reward += sentence_bleu([self.alignment[file]], self.observation,
+                                   weights=(0.25, 0.25, 0.25, 0.25),
+                                   smoothing_function=smoother.method1)
+            #print('The BLEU score is ' + str(round(reward, 2)))
 
         self.guess_count += 1
         # if guess_count == 6, then done with 1 video

@@ -7,7 +7,7 @@
 
 from collections import deque
 
-from REINFORCE import REINFORCE
+from pg_reinforce import PolicyGradientREINFORCE
 import tensorflow as tf
 import numpy as np
 import gym
@@ -36,7 +36,7 @@ def policy_network(states):
 
     return p
 
-pg_reinforce = REINFORCE(sess, optimizer, policy_network, state_dim, num_actions,
+pg_reinforce = PolicyGradientREINFORCE(sess, optimizer, policy_network, state_dim, num_actions,
                          summary_writer=writer)
 
 MAX_EPISODES = 10000
